@@ -69,7 +69,7 @@ http.createServer(function (request, response) {
         }
         else {
             response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
-            let message = fs.createReadStream(__dirname + "/123.txt", "utf8")
+            let message = fs.createReadStream(__dirname + "/mess.txt", "utf8")
             message.pipe(response)
         }
     });
