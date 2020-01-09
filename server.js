@@ -25,54 +25,106 @@
 
 const http = require("http");
 const fs = require("fs");
+const express = require('express')
+const app = express()
+const port = 3000;
+//bodyParser извлекает всю часть тела входящего потока запросов и предоставляет его на req.body
+let bodyParser = require('body-parser');
 
-/*
-http.createServer(function (request, response) {
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-    // app.use(bodyParser.text());
-    // app.post("http://127.0.0.1:3000", (req, response) => {
-    //     console.log(req.body);
-    // })
-
-    console.log(`Запрошенный адрес: ${request.url}`);
-    // получаем путь после слеша
-    const filePath = request.url.substr(1);
-    fs.readFile(filePath, function (error, data) {
-
-        if (error) {
-
-            response.statusCode = 404;
-            response.end("Resourse not found!");
-        }
-        else {
-            response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-            response.end(data);
-        }
-    });
-}).listen(3000, function () {
-    console.log("Server started at 3000");
+//Создаём сервер
+//http.createServer(function (request, response) {
+// Читает буфер как обычный текст и предоставляет результирующую строку на req.body
+app.use(bodyParser.text());
+app.use(bodyParser.json());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
 });
-*/
-
-
-http.createServer(function (request, response) {
-
-    console.log(`Запрошенный адрес: ${request.url}`);
-    // получаем путь после слеша
-    const filePath = request.url.substr(1);
-    fs.readFile(filePath, function (error, data) {
-
-        if (error) {
-
-            response.statusCode = 404;
-            response.end("Resourse not found!");
-        }
-        else {
-            response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
-            let message = fs.createReadStream(__dirname + "/mess.txt", "utf8")
-            message.pipe(response)
-        }
-    });
-}).listen(3000, function () {
-    console.log("Server started at 3000");
+app.post("/", (req, res) => {
+    console.log("req.body= " + req.body);
+    res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    if (req.method == "POST") {
+        console.log("Получили POST на серевере")
+        res.write("received POST request.");
+    }
+    else {
+        res.send("Undefined request .");
+    }
+    res.end()
 });
+
+const server = app.listen(port, (error) => {
+    if (error) return console.log(`Error: ${error}`);
+
+    console.log(`Server listening on port ${server.address().port}`);
+});
+
+// console.log(`Запрошенный адрес: ${request.url}`);
+// const filePath = request.url.substr(1);
+// fs.readFile(filePath, function (error, data) {
+
+//     if (error) {
+
+//         response.statusCode = 404;
+//         response.end("Resourse not found!");
+//     }
+//     else {
+//         response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+//         response.end(data);
+//     }
+// });
+
+    // response.end("data");
+// }).listen(5500, function () {
+//     console.log("Server started at 5500");
+// });
+
+
+// Рабочий варик
+// http.createServer(function (request, response) {
+
+//     console.log(`Запрошенный адрес: ${request.url}`);
+//     const filePath = request.url.substr(1);
+//     fs.readFile(filePath, function (error, data) {
+
+//         if (error) {
+
+//             response.statusCode = 404;
+//             response.end("Resourse not found!");
+//         }
+//         else {
+//             response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
+//             let message = fs.createReadStream(__dirname + "/mess.txt", "utf8")
+//             message.pipe(response)
+//         }
+//     });
+// }).listen(3000, function () {
+//     console.log("Server started at 3000");
+// });
+
+// http.createServer(function (request, response) {
+//     console.log(`Запрошенный адрес: ${request.url}`);
+//     const filePath = request.url.substr(1);
+//     fs.readFile(filePath, function (error, data) {
+//         if (error) {
+
+//             response.statusCode = 404;
+//             response.end("Resourse not found!");
+//         }
+//         else {
+//             response.writeHead(200, { 'Content-Type': 'application/json' });
+
+//             let myObj = {
+//                 name: 'Fro',
+//                 job: 'programmer',
+//                 age: 37
+//             };
+
+//             response.end(JSON.stringify(myObj));
+//         }
+//     });
+// });

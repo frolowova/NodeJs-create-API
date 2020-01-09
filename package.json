@@ -1,0 +1,29 @@
+{
+  "name": "mypack",
+  "version": "1.0.0",
+  "description": "packedges for lesson nodejs",
+  "main": "server.js",
+  "dependencies": {
+    "bytes": "^3.1.0",
+    "depd": "^1.1.2",
+    "ee-first": "^1.1.1",
+    "express": "^4.17.1",
+    "inherits": "^2.0.3",
+    "media-typer": "^0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frolowova/lessonNodeJs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frolowova/lessonNodeJs/issues"
+  },
+  "homepage": "https://github.com/frolowova/lessonNodeJs#readme"
+}
