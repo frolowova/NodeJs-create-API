@@ -38,6 +38,9 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 // Читает буфер как обычный текст и предоставляет результирующую строку на req.body
 app.use(bodyParser.text());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true,
+}));
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
@@ -46,14 +49,16 @@ app.use(function (req, res, next) {
 });
 app.post("/", (req, res) => {
     console.log("req.body= " + req.body);
-    res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-    if (req.method == "POST") {
-        console.log("Получили POST на серевере")
-        res.write("received POST request.");
-    }
-    else {
-        res.send("Undefined request .");
-    }
+    // res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    // if (req.method == "POST") {
+    console.log("Получили POST на серевере")
+    // res.write("received POST request.");
+    let mes = 'Вы ввели ' + req.body
+    res.send({ message: mes })
+    // }
+    // else {
+    //     res.send("Undefined request .");
+    // }
     res.end()
 });
 
